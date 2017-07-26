@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using film.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace film
 {
@@ -30,6 +32,8 @@ namespace film
         {
             // Add framework services.
             services.AddMvc();
+            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=film;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +54,6 @@ namespace film
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
