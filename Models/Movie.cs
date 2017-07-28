@@ -12,8 +12,8 @@ namespace film.Models
         public DateTime ReleaseDate { get; set; }
         public Genre Genre { get; set; }
         public List<Actor> Actors { get; set; }
-
     }
+
 
     public enum Genre
     {

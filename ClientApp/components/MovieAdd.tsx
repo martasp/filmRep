@@ -1,6 +1,8 @@
 import * as React from 'react';
-
+import { Router, Route, Switch, Redirect } from 'react-router'
 interface MovieState {
+    redirect:string;
+    movieId:number;
     name: string;
     releaseDate: string;
     genre: string;
@@ -22,10 +24,12 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
         this.onGenreChange = this.onGenreChange.bind(this);
         this.onReleaseDateChange = this.onReleaseDateChange.bind(this);
         this.submit = this.submit.bind(this);
-
+        
         this.onActorNameChange = this.onActorNameChange.bind(this);
         this.onActorSurnameChange = this.onActorSurnameChange.bind(this);
         this.state = {
+            redirect:"",
+            movieId:0,
             genre: "",
             name: "",
             releaseDate: "",
@@ -36,47 +40,43 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
                 }]
         };
     }
-
     public render() {
-        return <div>
-            <label> Movie submit form </label>
-            <div>
-                <input placeholder="Name" type="text" value={this.state.name} onChange={this.onNameChange} />
-            </div>
-            <div>
-                <input placeholder="releaseDate" type="date" value={this.state.releaseDate} onChange={this.onReleaseDateChange} />
-            </div>
-            <div>
-                <input placeholder="genre" type="text" value={this.state.genre} onChange={this.onGenreChange} />
-            </div>
-            <div>{this.renderActors()}</div>
-            <button onClick={this.add} type="button">Add actor!</button>
-            <button onClick={this.submit} type="button">Submit</button>
-        </div>;
+        if (this.state.redirect=="") {
+            return <div>
+                       <label> Movie submit form </label>
+                       <div>
+                           <input placeholder="Name" type="text" value={this.state.name} onChange={this.onNameChange} />
+                       </div>
+                       <div>
+                           <input placeholder="releaseDate" type="date" value={this.state.releaseDate} onChange={this.onReleaseDateChange} />
+                       </div>
+                       <div>
+                           <input placeholder="genre" type="text" value={this.state.genre} onChange={this.onGenreChange} />
+                       </div>
+                       <div>{this.renderActors()}</div>
+
+                       <button onClick={this.add} type="button">Add actor!</button>
+                       <button href="/movies" onClick={this.submit} type="button">Submit</button>
+                   </div>;
+        }
+        else return <Redirect to="/movies" />
     }
 
     submit() {
         console.log(this.state);
-
-
         const data = this.state;
-
-        alert(data);
-
-            fetch('/api/Movie', {
-                    method: "post",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-
+        fetch('/api/Movie', {
+            method: "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
                     //make sure to serialize your JSON body
                     body: JSON.stringify(data)
                 })
                 .then((response) => {
-                    //do something awesome that makes the world a better place
-                    alert(response);
-                });
+                this.setState({redirect:"/movies"});
+            });
     }
     add() {
         console.log(this.state);
