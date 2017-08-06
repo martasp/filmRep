@@ -33,7 +33,7 @@ namespace film.Controllers
                 _context.Movies.Add(movie);
                 _context.SaveChanges();
                 return Ok(movie);
-            } 
+            }
             return NotFound();
         }
         [HttpPut]
@@ -51,10 +51,10 @@ namespace film.Controllers
         public IActionResult remove([FromBody]int id)
         {
             var m = _context.Movies.Include(Actor => Actor.Actors).FirstOrDefault(movie => movie.MovieId == id);
-            if (m!=null)
+            if (m != null)
             {
                 _context.Movies.Remove(m);
-                m.Actors.ForEach(actor => _context.Actors.Remove(actor) );
+                m.Actors.ForEach(actor => _context.Actors.Remove(actor));
                 _context.SaveChanges();
                 return Ok(m);
             }

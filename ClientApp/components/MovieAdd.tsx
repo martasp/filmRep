@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router'
 interface MovieState {
-    redirect:string;
-    movieId:number;
+    redirect: string;
+    movieId: number;
     name: string;
     releaseDate: string;
     genre: string;
@@ -19,17 +19,16 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
         super();
         this.add = this.add.bind(this);
         this.renderActors = this.renderActors.bind(this);
-
         this.onNameChange = this.onNameChange.bind(this);
         this.onGenreChange = this.onGenreChange.bind(this);
         this.onReleaseDateChange = this.onReleaseDateChange.bind(this);
         this.submit = this.submit.bind(this);
-        
         this.onActorNameChange = this.onActorNameChange.bind(this);
         this.onActorSurnameChange = this.onActorSurnameChange.bind(this);
+
         this.state = {
-            redirect:"",
-            movieId:0,
+            redirect: "",
+            movieId: 0,
             genre: "drama",
             name: "",
             releaseDate: "",
@@ -41,27 +40,26 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
         };
     }
     public render() {
-        if (this.state.redirect=="") {
+        if (this.state.redirect == "") {
             return <div>
-                       <label> Movie submit form </label>
-                       <div>
-                           <input placeholder="Name" type="text" value={this.state.name} onChange={this.onNameChange} />
-                       </div>
-                       <div>
-                           <input placeholder="releaseDate" type="date" value={this.state.releaseDate} onChange={this.onReleaseDateChange} />
-                       </div>
-                       <div>
+                <label> Movie submit form </label>
+                <div>
+                    <input placeholder="Name" type="text" value={this.state.name} onChange={this.onNameChange} />
+                </div>
+                <div>
+                    <input placeholder="releaseDate" type="date" value={this.state.releaseDate} onChange={this.onReleaseDateChange} />
+                </div>
+                <div>
                     <select name="cars" onChange={this.onGenreChange}>
-                               <option value="drama">Drama</option>
-                               <option value="veiksmo">veiksmo</option>
-                               <option value="komedija">Komedija</option>
+                        <option value="drama">Drama</option>
+                        <option value="veiksmo">veiksmo</option>
+                        <option value="komedija">Komedija</option>
                     </select>
-
-                       </div>
-                       <div>{this.renderActors()}</div>
-                       <button onClick={this.add} type="button">Add actor!</button>
-                       <button href="/movies" onClick={this.submit} type="button">Submit</button>
-                   </div>;
+                </div>
+                <div>{this.renderActors()}</div>
+                <button onClick={this.add} type="button">Add actor!</button>
+                <button href="/movies" onClick={this.submit} type="button">Submit</button>
+            </div>;
         }
         else return <Redirect to="/movies" />
     }
@@ -75,12 +73,11 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-                    //make sure to serialize your JSON body
-                    body: JSON.stringify(data)
-                })
-                .then((response) => {
-                this.setState({redirect:"/movies"});
-            });
+            //make sure to serialize your JSON body
+            body: JSON.stringify(data)
+        }).then((response) => {
+            this.setState({ redirect: "/movies" });
+        });
     }
     add() {
         console.log(this.state);

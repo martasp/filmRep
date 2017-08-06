@@ -13,7 +13,7 @@ namespace film.DB
         public MovieContext(DbContextOptions<MovieContext> options) : base(options)
         {
         }
-        public MovieContext() 
+        public MovieContext()
         {
         }
 
