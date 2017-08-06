@@ -11,6 +11,17 @@ namespace film.Models
         [JsonIgnore]
         public Movie Movie { get; set; }
 
-        
+        public Actor(int actorId, string name, string surname, Movie movie)
+        {
+            ActorId = actorId;
+            Name = name;
+            Surname = surname;
+            Movie = movie;
+        }
+
+        public Actor()
+        {
+            
+        }
     }
 }

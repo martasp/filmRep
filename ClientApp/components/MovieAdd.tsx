@@ -30,7 +30,7 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
         this.state = {
             redirect:"",
             movieId:0,
-            genre: "",
+            genre: "drama",
             name: "",
             releaseDate: "",
             actors: [
@@ -51,10 +51,14 @@ export class MovieAdd extends React.Component<{}, Partial<MovieState>> {
                            <input placeholder="releaseDate" type="date" value={this.state.releaseDate} onChange={this.onReleaseDateChange} />
                        </div>
                        <div>
-                           <input placeholder="genre" type="text" value={this.state.genre} onChange={this.onGenreChange} />
+                    <select name="cars" onChange={this.onGenreChange}>
+                               <option value="drama">Drama</option>
+                               <option value="veiksmo">veiksmo</option>
+                               <option value="komedija">Komedija</option>
+                    </select>
+
                        </div>
                        <div>{this.renderActors()}</div>
-
                        <button onClick={this.add} type="button">Add actor!</button>
                        <button href="/movies" onClick={this.submit} type="button">Submit</button>
                    </div>;
